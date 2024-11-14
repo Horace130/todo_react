@@ -1,0 +1,68 @@
+import "./styles.css";
+import { useState } from "react";
+
+export default function App() {
+  const [num1, setNum1] = useState(0);
+  const [num2, setNum2] = useState(0);
+  const [result, setResult] = useState(0);
+  return (
+    <div className="App">
+      <div>
+        <input
+          type="number"
+          id="num1"
+          value={num1}
+          onChange={(event) => {
+            const value = event.currentTarget.value;
+            setNum1(value);
+            // if (value % 2 === 0) {
+            //   setNum1(value);
+            // }
+          }}
+        />
+        <input
+          type="number"
+          id="num2"
+          value={num2}
+          onChange={(event) => {
+            setNum2(event.currentTarget.value);
+          }}
+        />
+        <br />
+        <button
+          id="add"
+          onClick={() => {
+            setResult(parseInt(num1) + parseInt(num2));
+          }}
+        >
+          Addition
+        </button>
+        <button
+          id="subtract"
+          onClick={() => {
+            setResult(parseInt(num1) - parseInt(num2));
+          }}
+        >
+          Subtraction
+        </button>
+        <button
+          id="multiply"
+          onClick={() => {
+            setResult(parseInt(num1) * parseInt(num2));
+          }}
+        >
+          Multiplication
+        </button>
+        <button
+          id="divide"
+          onClick={() => {
+            setResult(parseInt(num1) / parseInt(num2));
+          }}
+        >
+          Division
+        </button>
+      </div>
+      <p id="result">{result}</p>
+    </div>
+  );
+}
