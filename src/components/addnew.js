@@ -18,7 +18,7 @@ function AddNewForm(props) {
    // push new item into the tasks array
    tasks.push({
      id: nanoid(),
-     taskName: taskName,
+     name: taskName,
    });
 
    // convert the tasks array into string format (JSON string)
