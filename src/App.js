@@ -4,8 +4,25 @@ import AddNewForm from "./components/addnew";
 import TasksList from "./components/list";
 
 function App() {
-    const [list, setList ] = useState([]);
-    console.log(list)
+
+    const [list, setList] = useState(() => {
+      const stringTasks = localStorage.getItem("Tasks");
+      return stringTasks ? JSON.parse(stringTasks) : [];
+    });
+
+  // if Tasks is not found in the localstorage, set empty array
+  if (!list) {
+    list = [];
+  }
+
+  const handlePostDelete = (task_id) => {
+    // 1. remove the selected post from Tasks based on the post_id
+    let filteredTasks = Tasks.filter((task) => task.id !== task_id);
+    // 2. update the data back to the local storage using thelocalStorage.setItem()
+    let convertedTasks = JSON.stringify(filteredTasks);
+
+    localStorage.setItem("Tasks", convertedTasks);}
+    
     return (
         <div className="container">
         <div
@@ -23,7 +40,7 @@ function App() {
           // filter OUT the student with the given id
           const newList = list.filter((s) => s.id !== id);
           // update the newList with the setState function
-          setList(newList);
+           setList(newList);
         }}
         onTaskComplete={(id) => {
           const newList = list.map((task) =>
@@ -32,7 +49,7 @@ function App() {
               : task
           );
        
-          setList(newList);
+           setList(newList);
         }}/>
           </div>
           <AddNewForm onNewNameAdded={(taskName) => {
@@ -45,7 +62,7 @@ function App() {
                 name: taskName,
               });
               // update the newList with the setState function
-              setList(newList);
+               setList(newList);
             }} />
         </div>
       </div>
@@ -57,4 +74,3 @@ function App() {
   }
   
   export default App;
-  
