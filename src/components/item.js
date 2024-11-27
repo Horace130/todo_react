@@ -1,50 +1,43 @@
-function Task(props) {
-  const { id, name = "No Task", isCompleted, onTaskDelete, onTaskComplete } = props;
-
-  // Render the task as completed
-  if (isCompleted) {
-    return (
-      <li className="list-group-item d-flex justify-content-between align-items-center">
-        <div>
-          <button className="btn btn-sm btn-success" onClick={() => onTaskComplete(id)}>
-            <i className="bi bi-check-square"></i>
-          </button>
-          <span className="ms-3 text-decoration-line-through">{name}</span>
-        </div>
-        <div>
-          <button
-            className="btn btn-danger btn-sm"
-            onClick={() => {
-              const confirm = window.confirm("Are you sure you want to delete this task?");
-              if (confirm) {
-                onTaskDelete(id);
-              }
-            }}
-          >
-            <i className="bi bi-trash"></i>
-          </button>
-        </div>
-      </li>
-    );
-  }
-
-  // Render the task as incomplete
+function TodoItem(props) {
+  const { id, text, isCompleted, onItemUpdate, onItemDelete } = props;
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
       <div>
-        <button className="btn btn-sm btn-light" onClick={() => onTaskComplete(id)}>
-          <i className="bi bi-square"></i>
-        </button>
-        <span className="ms-3">{name}</span>
+        {isCompleted ? (
+          <button
+            className="btn btn-sm btn-success"
+            onClick={() => {
+              // passing in the id and the new status
+              onItemUpdate(id, false);
+            }}
+          >
+            <i className="bi bi-check-square"></i>
+          </button>
+        ) : (
+          <button
+            className="btn btn-sm btn-light"
+            onClick={() => {
+              onItemUpdate(id, true);
+            }}
+          >
+            <i className="bi bi-square"></i>
+          </button>
+        )}
+        {/* <button className={isCompleted ? "btn btn-sm btn-success" : "btn btn-sm btn-light"}>
+            <i className={ isCompleted ? "bi bi-check-square" : "bi bi-square" }></i>
+        </button> */}
+        {/* this is for comment */}
+        <span
+          className={isCompleted ? "ms-2 text-decoration-line-through" : "ms-2"}
+        >
+          {text}
+        </span>
       </div>
       <div>
         <button
-          className="btn btn-danger btn-sm"
+          className="btn btn-sm btn-danger"
           onClick={() => {
-            const confirm = window.confirm("Are you sure you want to delete this task?");
-            if (confirm) {
-              onTaskDelete(id);
-            }
+            onItemDelete(id);
           }}
         >
           <i className="bi bi-trash"></i>
@@ -53,4 +46,4 @@ function Task(props) {
     </li>
   );
 }
-export default Task;
+export default TodoItem;
